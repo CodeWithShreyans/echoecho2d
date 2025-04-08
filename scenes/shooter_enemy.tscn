@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/shooter_enemy.gd" id="1_xmakv"]
+[ext_resource type="Texture2D" uid="uid://c8yvt6q2yjdx8" path="res://assets/textures/enemy_circle.tres" id="2_uxvr4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 20.0
+
+[node name="ShooterEnemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 1
+collision_mask = 4
+script = ExtResource("1_xmakv")
+shoot_cooldown = 2.0
+shoot_distance = 450.0
+shoot_accuracy = 0.85
+projectile_count = 1
+patrol_speed = 15.0
+base_chase_speed = 75.0
+detection_radius = 500.0
+reveal_duration = 0.025
+wave_detection_radius = 600.0
+wave_chase_duration = 1.8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.5, 0.2, 1)
+texture = ExtResource("2_uxvr4")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_2")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"] 
